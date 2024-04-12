@@ -30,8 +30,8 @@ def generate_image(no_of_threads_v: int,
     pattern = np.zeros((height, width, 3), dtype=np.uint8)
     line_color = (0, 0, 0)
 
+    toggle_line = 1 
     for i in range(rows):
-        index = 0
         for j in range(columns):
             x1 = j * width // columns
             y1 = i * height // rows
@@ -39,9 +39,20 @@ def generate_image(no_of_threads_v: int,
             y2 = (i + 1) * height // rows
             if i%2 != 0:
                 cv2.rectangle(pattern, (x1, y1), (x2, y2), backgroud_color, -1)
-                
-                cv2.line(pattern, (x1, y1), (x2, y1), line_color, 1)
-                cv2.line(pattern, (x1, y2), (x2, y2), line_color, 2)
+                if j%2 != 0 and toggle_line:
+                    cv2.line(pattern, (x1, y1), (x2, y1), line_color, 1)
+                    cv2.line(pattern, (x1, y2), (x2, y2), line_color, 2)
+                    toggle_line = 0
+                    continue
+                if j%2 != 0 and not toggle_line:
+                    cv2.line(pattern, (x1, y1), (x1, y2), line_color, 1)
+                    cv2.line(pattern, (x2, y1), (x2, y2), line_color, 2)
+                    toggle_line = 1
+                    continue
+                    
+                # cv.imwr
+                # cv2.imwrite(f"test{i+j}.jpg", pattern) 
+                print(toggle_line)
                 continue
             if (i + j) % 2 == 0:
                 cv2.rectangle(pattern, (x1, y1), (x2, y2), thread_color, -1)
