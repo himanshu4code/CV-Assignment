@@ -49,24 +49,17 @@ def generate_image(no_of_threads_v: int,
                     cv2.line(pattern, (x2, y1), (x2, y2), line_color, 2)
                     toggle_line = 1
                     continue
-                    
-                # cv.imwr
-                # cv2.imwrite(f"test{i+j}.jpg", pattern) 
-                print(toggle_line)
                 continue
             if (i + j) % 2 == 0:
                 cv2.rectangle(pattern, (x1, y1), (x2, y2), thread_color, -1)
             else:
                 cv2.rectangle(pattern, (x1, y1), (x2, y2), backgroud_color, -1)
+    cv2.imwrite("weaven_pattern.jpg", pattern)
 
-    # Display the pattern
-    cv2.imshow('Weave Pattern', pattern)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-
-no_of_threads_v = 4
-no_of_threads_h = 3
-thread_color =  (255, 0, 0) 
-backgroud_color = (0, 255,255)
-generate_image(no_of_threads_h=no_of_threads_h, no_of_threads_v=no_of_threads_v, thread_color=thread_color, backgroud_color=backgroud_color)
+if __name__ == "__main__":
+    no_of_threads_v = 8
+    no_of_threads_h = 9
+    thread_color =  (255, 0, 0) 
+    backgroud_color = (0, 255,255)
+    #TODO Support for shape of thread and layout of thread remaining
+    generate_image(no_of_threads_h=no_of_threads_h, no_of_threads_v=no_of_threads_v, thread_color=thread_color, backgroud_color=backgroud_color)
